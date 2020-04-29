@@ -1,0 +1,90 @@
+make negac
+make[1]: Entering directory '/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files'
+g++ -pedantic -Wall -Wextra -Wcast-align -Wcast-qual -Wctor-dtor-privacy -Wdisabled-optimization -Wformat=2 -Wuninitialized -Winit-self -Wmissing-declarations -Wmissing-include-dirs -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wsign-conversion -Wsign-promo -Wstrict-overflow=5 -Wundef -Werror -Wno-unused -Wno-unused-parameter -g -std=c++14 -o negac parser.o lexer.o tokens.o type_analysis.o x86_codegen.o unparse.o scanner.o x64_codegen.o name_analysis.o ast.o types.o symbol_table.o 3ac_prog.o entrypoint.o 3ac_proc.o 3ac_quads.o 3ac_output.o
+x64_codegen.o: In function `__gnu_cxx::__aligned_membuf<negatron::Quad*>::_M_addr()':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:7: multiple definition of `negatron::IRProgram::allocGlobals()'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:7: first defined here
+x64_codegen.o: In function `negatron::IRProgram::datagenX64(std::ostream&)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:11: multiple definition of `negatron::IRProgram::datagenX64(std::ostream&)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:22: first defined here
+x64_codegen.o: In function `negatron::IRProgram::toX64(std::ostream&)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:15: multiple definition of `negatron::IRProgram::toX64(std::ostream&)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:44: first defined here
+x64_codegen.o: In function `negatron::Procedure::allocLocals()':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:19: multiple definition of `negatron::Procedure::allocLocals()'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:58: first defined here
+x64_codegen.o: In function `negatron::Procedure::toX64(std::ostream&)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:23: multiple definition of `negatron::Procedure::toX64(std::ostream&)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:86: first defined here
+x64_codegen.o: In function `negatron::Quad::codegenLabels(std::ostream&)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:38: multiple definition of `negatron::Quad::codegenLabels(std::ostream&)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:103: first defined here
+x64_codegen.o: In function `negatron::BinOpQuad::codegenX64(std::ostream&)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:50: multiple definition of `negatron::BinOpQuad::codegenX64(std::ostream&)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:115: first defined here
+x64_codegen.o: In function `negatron::UnaryOpQuad::codegenX64(std::ostream&)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:54: multiple definition of `negatron::UnaryOpQuad::codegenX64(std::ostream&)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:184: first defined here
+x64_codegen.o: In function `negatron::AssignQuad::codegenX64(std::ostream&)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:58: multiple definition of `negatron::AssignQuad::codegenX64(std::ostream&)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:199: first defined here
+x64_codegen.o: In function `negatron::LocQuad::codegenX64(std::ostream&)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:63: multiple definition of `negatron::LocQuad::codegenX64(std::ostream&)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:205: first defined here
+x64_codegen.o: In function `negatron::JmpQuad::codegenX64(std::ostream&)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:67: multiple definition of `negatron::JmpQuad::codegenX64(std::ostream&)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:209: first defined here
+x64_codegen.o: In function `negatron::JmpIfQuad::codegenX64(std::ostream&)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:71: multiple definition of `negatron::JmpIfQuad::codegenX64(std::ostream&)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:213: first defined here
+x64_codegen.o: In function `negatron::NopQuad::codegenX64(std::ostream&)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:75: multiple definition of `negatron::NopQuad::codegenX64(std::ostream&)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:224: first defined here
+x64_codegen.o: In function `negatron::IntrinsicQuad::codegenX64(std::ostream&)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:79: multiple definition of `negatron::IntrinsicQuad::codegenX64(std::ostream&)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:228: first defined here
+x64_codegen.o: In function `negatron::CallQuad::codegenX64(std::ostream&)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:83: multiple definition of `negatron::CallQuad::codegenX64(std::ostream&)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:252: first defined here
+x64_codegen.o: In function `negatron::EnterQuad::codegenX64(std::ostream&)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:87: multiple definition of `negatron::EnterQuad::codegenX64(std::ostream&)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:269: first defined here
+x64_codegen.o: In function `negatron::LeaveQuad::codegenX64(std::ostream&)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:91: multiple definition of `negatron::LeaveQuad::codegenX64(std::ostream&)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:277: first defined here
+x64_codegen.o: In function `negatron::SetInQuad::codegenX64(std::ostream&)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:95: multiple definition of `negatron::SetInQuad::codegenX64(std::ostream&)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:284: first defined here
+x64_codegen.o: In function `negatron::GetInQuad::codegenX64(std::ostream&)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:99: multiple definition of `negatron::GetInQuad::codegenX64(std::ostream&)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:292: first defined here
+x64_codegen.o: In function `negatron::SetOutQuad::codegenX64(std::ostream&)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:103: multiple definition of `negatron::SetOutQuad::codegenX64(std::ostream&)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:296: first defined here
+x64_codegen.o: In function `negatron::GetOutQuad::codegenX64(std::ostream&)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:107: multiple definition of `negatron::GetOutQuad::codegenX64(std::ostream&)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:301: first defined here
+x64_codegen.o: In function `negatron::SymOpd::genLoad(std::ostream&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:111: multiple definition of `negatron::SymOpd::genLoad(std::ostream&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:306: first defined here
+x64_codegen.o: In function `negatron::SymOpd::genStore(std::ostream&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:115: multiple definition of `negatron::SymOpd::genStore(std::ostream&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:310: first defined here
+x64_codegen.o: In function `negatron::AuxOpd::genLoad(std::ostream&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:119: multiple definition of `negatron::AuxOpd::genLoad(std::ostream&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:314: first defined here
+x64_codegen.o: In function `negatron::AuxOpd::genStore(std::ostream&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:123: multiple definition of `negatron::AuxOpd::genStore(std::ostream&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:322: first defined here
+x64_codegen.o: In function `negatron::LitOpd::genLoad(std::ostream&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:127: multiple definition of `negatron::LitOpd::genLoad(std::ostream&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:326: first defined here
+x64_codegen.o: In function `negatron::LitOpd::genStore(std::ostream&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)':
+/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x64_codegen.cpp:131: multiple definition of `negatron::LitOpd::genStore(std::ostream&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >)'
+x86_codegen.o:/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files/x86_codegen.cpp:330: first defined here
+collect2: error: ld returned 1 exit status
+Makefile:20: recipe for target 'negac' failed
+make[1]: *** [negac] Error 1
+make[1]: Leaving directory '/mnt/c/Users/drew/Dropbox/faculty/teaching/eecs665/negatron/p5_files'
+Makefile:12: recipe for target 'all' failed
+make: *** [all] Error 2
