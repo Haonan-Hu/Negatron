@@ -3,6 +3,8 @@
 #include "errName.hpp"
 #include "types.hpp"
 
+bool mainDeclared = false;
+
 namespace negatron{
 
 bool ProgramNode::nameAnalysis(SymbolTable * symTab){
@@ -14,6 +16,11 @@ bool ProgramNode::nameAnalysis(SymbolTable * symTab){
 	}
 	//Leave the global scope
 	symTab->leaveScope();
+	if(!mainDeclared)
+	{
+		throw new InternalError("No main function declared");
+		return false;
+	}
 	return res;
 }
 
@@ -60,7 +67,7 @@ bool IfStmtNode::nameAnalysis(SymbolTable * symTab){
 	symTab->enterScope();
 	for (auto stmt : *myBody){
 		result = stmt->nameAnalysis(symTab) && result;
-	}	
+	}
 	symTab->leaveScope();
 	return result;
 }
@@ -71,12 +78,12 @@ bool IfElseStmtNode::nameAnalysis(SymbolTable * symTab){
 	symTab->enterScope();
 	for (auto stmt : *myBodyTrue){
 		result = stmt->nameAnalysis(symTab) && result;
-	}	
+	}
 	symTab->leaveScope();
 	symTab->enterScope();
 	for (auto stmt : *myBodyFalse){
 		result = stmt->nameAnalysis(symTab) && result;
-	}	
+	}
 	symTab->leaveScope();
 	return result;
 }
@@ -87,7 +94,7 @@ bool WhileStmtNode::nameAnalysis(SymbolTable * symTab){
 	symTab->enterScope();
 	for (auto stmt : *myBody){
 		result = stmt->nameAnalysis(symTab) && result;
-	}	
+	}
 	symTab->leaveScope();
 	return result;
 }
@@ -104,15 +111,15 @@ static bool dataDecl(SymbolTable * symTab, VarDeclNode * decl, TypeNode * typeNo
 	IDNode * id = decl->ID();
 	std::string varName = id->getName();
 	if (varObj->getBaseType() == BaseType::VOID){
-		NameErr::badVoid(id->line(), id->col()); 
+		NameErr::badVoid(id->line(), id->col());
 		SemSymbol * sym = new SemSymbol(VAR, ErrorType::produce(), varName);
 		decl->ID()->attachSymbol(sym);
 		validType = false;
 	}
 
 	bool validName = !symTab->clash(varName);
-	if (!validName){ 
-		NameErr::multiDecl(id->line(), id->col()); 
+	if (!validName){
+		NameErr::multiDecl(id->line(), id->col());
 	}
 
 	if (!validType || !validName){ return false; }
@@ -133,6 +140,10 @@ bool FormalDeclNode::nameAnalysis(SymbolTable * symTab){
 
 bool FnDeclNode::nameAnalysis(SymbolTable * symTab){
 	std::string fnName = this->ID()->getName();
+	if(fnName == "main")
+	{
+		mainDeclared = true;
+	}
 	const DataType * retType = myRetType->getDataType();
 	const VarType * retVarType = retType->asVar();
 	if (retVarType->getBaseType() == BaseType::VOID){
@@ -145,23 +156,23 @@ bool FnDeclNode::nameAnalysis(SymbolTable * symTab){
 	ScopeTable * inFnScope = symTab->enterScope();
 
 	bool validFormals = true;
-	std::list<const DataType *> * formalTypes = 
+	std::list<const DataType *> * formalTypes =
 		new std::list<const DataType *>();
 	for (auto formal : *(this->myFormals)){
 		validFormals = formal->nameAnalysis(symTab) && validFormals;
 		formalTypes->push_back(formal->getDeclaredType());
 	}
-	
+
 	const TupleType * formalsType = new TupleType(formalTypes);
 
 	//Note that we check for a clash of the function name in
 	// the scope at which it exists (i.e. the function scope)
 	bool validName = !atFnScope->clash(fnName);
 	if (validName == false){
-		NameErr::multiDecl(ID()->line(), ID()->col()); 
+		NameErr::multiDecl(ID()->line(), ID()->col());
 	}
 
-	//Make sure the fnSymbol is in the symbol table before 
+	//Make sure the fnSymbol is in the symbol table before
 	// analyzing the body, to allow for recursive calls
 	if (validName && validFormals){
 		FnType * fnType = new FnType(formalsType, retType);

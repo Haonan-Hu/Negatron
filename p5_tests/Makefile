@@ -6,8 +6,8 @@ TESTS := $(TESTFILES:.nega=.test)
 all: $(TESTS)
 
 %.test:
-	@rm -f $*.unparse $*.err $*.out
-	@touch $*.unparse $*.err $*.out
+	@rm -f $*.unparse $*.err $*.out $*.3ac
+	@touch $*.unparse $*.err $*.out $*.3ac
 	@echo "TEST $*"
 	@../negac $*.nega -c 2> $*.err; \
 	PROG_EXIT_CODE=$$?;\
@@ -19,7 +19,8 @@ all: $(TESTS)
 	STDERR_DIFF_EXIT=$$?;\
 	exit $$STDERR_DIFF_EXIT
 
-	@../negac $*.nega -a $*.out 2> $*.out
+	@../negac $*.nega -a $*.3ac 2> $*.3ac #run 3ac
+	@../negac $*.nega -o $*.out 2> $*.out # run asm
 	diff -B --ignore-all-space $*.out $*.out.expected
 clean:
 	rm -f *.err *.out
