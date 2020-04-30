@@ -37,7 +37,7 @@ public:
 
 class SymOpd : public Opd{
 public:
-	std::string toString() override{ 
+	std::string toString() override{
 		return mySym->getName();
 	}
 	const SemSymbol * getSym(){ return mySym; }
@@ -63,7 +63,7 @@ public:
 	}
 private:
 	//Private Constructor
-	SymOpd(SemSymbol * sym) : mySym(sym) {} 
+	SymOpd(SemSymbol * sym) : mySym(sym) {}
 	SemSymbol * mySym;
 	std::string myLoc;
 	friend class Procedure;
@@ -91,7 +91,7 @@ private:
 
 class AuxOpd : public Opd{
 public:
-	AuxOpd(std::string nameIn, OpdType typeIn) 
+	AuxOpd(std::string nameIn, OpdType typeIn)
 	: name(nameIn), myType(typeIn) { }
 	std::string toString() override{
 		return name;
@@ -170,7 +170,7 @@ private:
 };
 
 class AssignQuad : public Quad{
-	
+
 public:
 	AssignQuad(Opd * dstIn, Opd * srcIn)
 	: dst(dstIn), src(srcIn)
@@ -310,7 +310,7 @@ public:
 	SymOpd * getSymOpd(SemSymbol * sym);
 	AuxOpd * makeTmp();
 
-	std::string toString(bool verbose=false); 
+	std::string toString(bool verbose=false);
 	std::string getName();
 
 	negatron::Label * getLeaveLabel();
@@ -327,8 +327,8 @@ private:
 
 	IRProgram * myProg;
 	std::map<SemSymbol *, SymOpd *> locals;
-	std::list<AuxOpd *> temps; 
-	std::list<SymOpd *> formals; 
+	std::list<AuxOpd *> temps;
+	std::list<SymOpd *> formals;
 	std::list<Quad *> bodyQuads;
 	std::string myName;
 	size_t maxTmp;
@@ -348,9 +348,9 @@ public:
 private:
 	size_t max_label = 0;
 	size_t str_idx = 0;
-	std::list<Procedure *> procs; 
+	std::list<Procedure *> procs; //main func
 	HashMap<AuxOpd *, std::string> strings;
-	std::map<SemSymbol *, SymOpd *> globals;
+	std::map<SemSymbol *, SymOpd *> globals; //saves global variables
 
 	void datagenX64(std::ostream& out);
 	void allocGlobals();
@@ -358,4 +358,4 @@ private:
 
 }
 
-#endif 
+#endif

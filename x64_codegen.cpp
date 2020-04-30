@@ -5,15 +5,25 @@
 namespace negatron{
 
 void IRProgram::allocGlobals(){
-	TODO(Implement me)
+	for(auto it = globals.cbegin(); it != globals.cend(); ++it)
+	{
+    std::cout << it->first->getName() << "\n\n";
+	}
+	// for(auto proc: procs)
+	// {
+	// 	std::cout << proc->getName() << '\n';
+	// }
+	// TODO(Implement me)
 }
 
 void IRProgram::datagenX64(std::ostream& out){
-	TODO(Implement me)
+	allocGlobals();
+	// TODO(Implement me)
 }
 
 void IRProgram::toX64(std::ostream& out){
-	TODO(Implement me)
+	datagenX64(out);
+	// TODO(Implement me)
 }
 
 void Procedure::allocLocals(){

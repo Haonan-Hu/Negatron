@@ -1,5 +1,5 @@
 int a;
 
-int mainddd(){
-  return 0;
+int main(){
+
 }

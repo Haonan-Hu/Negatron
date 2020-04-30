@@ -1,1 +1,8 @@
-InternalError: No main function declared
+[BEGIN GLOBALS]
+a
+[END GLOBALS]
+[BEGIN main LOCALS]
+[END main LOCALS]
+enter main
+lbl_0: EXIT
+
