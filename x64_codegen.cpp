@@ -5,29 +5,70 @@
 namespace negatron{
 
 void IRProgram::allocGlobals(){
+	std::string temp;
 	for(auto it = globals.cbegin(); it != globals.cend(); ++it)
 	{
-    std::cout << it->first->getName() << "\n\n";
+		temp = "gbl_" + it->first->getName();
+		it->second->setMemoryLoc(temp);
 	}
-	// for(auto proc: procs)
-	// {
-	// 	std::cout << proc->getName() << '\n';
-	// }
 	// TODO(Implement me)
 }
 
 void IRProgram::datagenX64(std::ostream& out){
+	out << ".data\n";
+	out << ".globl\tmain\n";
 	allocGlobals();
+	for(auto it = globals.cbegin(); it != globals.cend(); ++it)
+	{
+		out << it->second->getMemoryLoc() << ":\tquad 0\n";
+	}
+	for(auto str : strings)
+	{
+		out << str.first->getName() << ": ";
+		out << "\t.asciz " << str.second << '\n';
+		str.first->setMemoryLoc(str.first->getName());
+	}
+	out << ".align 8\n\n";
+
 	// TODO(Implement me)
 }
 
 void IRProgram::toX64(std::ostream& out){
 	datagenX64(out);
+	for(auto proc : procs)
+	{
+		proc->toX64(out);
+	}
 	// TODO(Implement me)
 }
 
 void Procedure::allocLocals(){
-	TODO(Implement me)
+	std::string temp;
+	size_t var = 0;
+	//allocing local variables
+	for(auto it : locals)
+	{
+		var++;
+		size_t temp1 = var * 8 + 16; //16 is for jumping over rbp and rip
+		it.second->setMemoryLoc('-' + to_string(temp1) + "(%rbp)"); // -(16+ numOfLoc * 8)(%rbp)
+	}
+	//allocing function parameters
+	var = 0;
+	for(auto it : formals)
+	{
+		var++;
+		size_t temp1 = (formals.size() - var) * 8; //allocating parameters
+		it->setMemoryLoc(to_string(temp1) + "(%rbp)");
+	}
+	//allocing temps
+	var = 0;
+	for(auto it : temps)
+	{
+		var++;
+		size_t temp3 = 16 + locals.size() * 8 + var * 8;
+		it->setMemoryLoc('-' + to_string(temp3) + "(%rbp)");
+	}
+	// TODO(Implement me)
 }
 
 void Procedure::toX64(std::ostream& out){
@@ -36,13 +77,21 @@ void Procedure::toX64(std::ostream& out){
 
 	out << "fun_" << myName << ":" << "\n";
 
-	enter->codegenX64(out);
-	for (auto quad : bodyQuads){
-		quad->codegenLabels(out);
-		quad->codegenX64(out);
-	}
-	leave->codegenLabels(out);
-	leave->codegenX64(out);
+	//prologue
+	enter->codegenX64(out); // 1st
+	size_t locals = localsSize() + numTemps();
+	// cout << localsSize() << ", " << numTemps() << '\n';
+	out << "\t\t\t\tsubq\t" << '$' << locals * 8 << ", %rsp\n";
+
+	//body
+	// for (auto quad : bodyQuads){
+	// 	quad->codegenLabels(out); // done
+	// 	quad->codegenX64(out); //2nd
+	// }
+
+	//epologue
+	leave->codegenLabels(out); //done
+	leave->codegenX64(out); //?
 }
 
 void Quad::codegenLabels(std::ostream& out){
@@ -87,7 +136,19 @@ void NopQuad::codegenX64(std::ostream& out){
 }
 
 void IntrinsicQuad::codegenX64(std::ostream& out){
-	TODO(Implement me)
+	if(this->myIntrinsic == "OUTPUT")
+	{
+
+	}
+	else if(this->myIntrinsic == "INPUT")
+	{
+
+	}
+	else if(this->myIntrinsic == "EXIT") //syscall
+	{
+		
+	}
+	// TODO(Implement me)
 }
 
 void CallQuad::codegenX64(std::ostream& out){
@@ -95,7 +156,10 @@ void CallQuad::codegenX64(std::ostream& out){
 }
 
 void EnterQuad::codegenX64(std::ostream& out){
-	TODO(Implement me)
+	out << "\t\t\t\tpushq\t" << "%rbp\n";
+	out << "\t\t\t\tmovq\t" << "%rsp, %rbp\n";
+	out << "\t\t\t\taddq\t" << "$16, %rbp\n";
+	// TODO(Implement me)
 }
 
 void LeaveQuad::codegenX64(std::ostream& out){

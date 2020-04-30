@@ -1,0 +1,10 @@
+.data
+.globl	main
+gbl_a:	quad 0
+.align 8
+fun_main:
+				pushq	%rbp
+				movq	%rsp, %rbp
+				addq	$16, %rbp
+				subq	$8, %rsp
+lbl_0: 

@@ -21,6 +21,6 @@ all: $(TESTS)
 
 	@../negac $*.nega -a $*.3ac 2> $*.3ac #run 3ac
 	@../negac $*.nega -o $*.out 2> prog.s # run asm
-	diff -B --ignore-all-space $*.out $*.out.expected
+	# diff -B --ignore-all-space $*.out $*.out.expected
 clean:
 	rm -f *.err *.out

@@ -2,6 +2,7 @@
 a
 [END GLOBALS]
 [BEGIN main LOCALS]
+a (local)
 [END main LOCALS]
 enter main
 lbl_0: EXIT
