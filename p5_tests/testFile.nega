@@ -1,4 +1,7 @@
 int a;
+int fn(int b){
+  output b - 99;
+}
 int main(){
-  output (2 <= 1);
+  fn(99 - 90);
 }

@@ -47,7 +47,7 @@ void Procedure::allocLocals(){
 	std::string temp;
 	size_t var = 0;
 	//allocing local variables
-	cout << "temp:" << numTemps() << ',' << "local:" << localsSize() << '\n';
+	// cout << "temp:" << numTemps() << ',' << "local:" << localsSize() << '\n';
 	for(auto it : locals)
 	{
 		var++;
@@ -181,7 +181,20 @@ void BinOpQuad::codegenX64(std::ostream& out){
 }
 
 void UnaryOpQuad::codegenX64(std::ostream& out){
-	TODO(Implement me)
+	if(op == NOT) // not
+	{
+		src->genLoad(out, "%rax");
+		out << "\t\t\t\tcmpq $1, %rax\n";
+		out << "\t\t\t\tsetne %al\n";
+		dst->genStore(out, "%rax"); //save %rax to tmp
+	}
+	else if(op == NEG)
+	{
+		src->genLoad(out, "%rax");
+		out << "\t\t\t\timulq $-1, %rax\n";
+		dst->genStore(out, "%rax"); //save %rax to tmp
+	}
+	// TODO(Implement me)
 }
 
 void AssignQuad::codegenX64(std::ostream& out){
@@ -235,7 +248,21 @@ void IntrinsicQuad::codegenX64(std::ostream& out){
 }
 
 void CallQuad::codegenX64(std::ostream& out){
-	TODO(Implement me)
+	size_t temp = 0; //parameters
+	if(callee->getTypeString().find('-') != 0)
+	{
+		for(auto c : callee->getTypeString())
+		{
+			if(c == ',')
+			{
+				temp++;
+			}
+		}
+		temp += 1;
+	}
+	out << "\t\t\t\tcallq fun_" << callee->getName() << '\n';
+	out << "\t\t\t\taddq $" << temp * 8 << ", %rsp\n";
+	// TODO(Implement me)
 }
 
 void EnterQuad::codegenX64(std::ostream& out){
@@ -246,11 +273,18 @@ void EnterQuad::codegenX64(std::ostream& out){
 }
 
 void LeaveQuad::codegenX64(std::ostream& out){
-	TODO(Implement me)
+	size_t temp = 8 * myProc->numTemps() + 8 * myProc->localsSize();
+	out << "\taddq $" << to_string(temp) << ", %rsp\n";
+	out << "\t\t\t\tpopq %rbp\n";
+	out << "\t\t\t\tretq\n";
+	// TODO(Implement me)
 }
 
 void SetInQuad::codegenX64(std::ostream& out){
-	TODO(Implement me)
+	opd->genLoad(out, "%rax");
+	out << "\t\t\t\tsubq $8, %rsp\n";
+	out << "\t\t\t\tmovq %rax, (%rsp)\n";
+	// TODO(Implement me)
 }
 
 void GetInQuad::codegenX64(std::ostream& out){
