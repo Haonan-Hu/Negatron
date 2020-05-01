@@ -23,4 +23,4 @@ all: $(TESTS)
 	@../negac $*.nega -o $*.out 2> prog.s # run asm
 	# diff -B --ignore-all-space $*.out $*.out.expected
 clean:
-	rm -f *.err *.out
+	rm -f *.err *.out *.o *.exe

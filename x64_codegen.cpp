@@ -16,11 +16,12 @@ void IRProgram::allocGlobals(){
 
 void IRProgram::datagenX64(std::ostream& out){
 	out << ".data\n";
-	out << ".globl\tmain\n";
+
+	out << ".globl\tfun_main\n";
 	allocGlobals();
 	for(auto it = globals.cbegin(); it != globals.cend(); ++it)
 	{
-		out << it->second->getMemoryLoc() << ":\tquad 0\n";
+		out << it->second->getMemoryLoc() << ":\t.quad 0\n";
 	}
 	for(auto str : strings)
 	{
@@ -28,8 +29,8 @@ void IRProgram::datagenX64(std::ostream& out){
 		out << "\t.asciz " << str.second << '\n';
 		str.first->setMemoryLoc(str.first->getName());
 	}
-	out << ".align 8\n\n";
-
+	out << ".align 8\n";
+	out << "\n.text\n\n";
 	// TODO(Implement me)
 }
 
@@ -83,11 +84,11 @@ void Procedure::toX64(std::ostream& out){
 	// cout << localsSize() << ", " << numTemps() << '\n';
 	out << "\t\t\t\tsubq\t" << '$' << locals * 8 << ", %rsp\n";
 
-	//body
-	// for (auto quad : bodyQuads){
-	// 	quad->codegenLabels(out); // done
-	// 	quad->codegenX64(out); //2nd
-	// }
+	// body
+	for (auto quad : bodyQuads){
+		quad->codegenLabels(out); // done
+		quad->codegenX64(out); //2nd
+	}
 
 	//epologue
 	leave->codegenLabels(out); //done
@@ -136,17 +137,28 @@ void NopQuad::codegenX64(std::ostream& out){
 }
 
 void IntrinsicQuad::codegenX64(std::ostream& out){
-	if(this->myIntrinsic == "OUTPUT")
+	if(this->myIntrinsic == OUTPUT)
 	{
-
+		if(myArg->getType() == ADDR)
+		{
+			myArg->genLoad(out, "%rdi");
+			out << "\t\t\t\tcallq printString\n";
+		}
+		else
+		{
+			myArg->genLoad(out, "%rdi");
+			out << "\t\t\t\tcallq printInt\n";
+		}
 	}
-	else if(this->myIntrinsic == "INPUT")
+	else if(this->myIntrinsic == INPUT)
 	{
-
 	}
-	else if(this->myIntrinsic == "EXIT") //syscall
+	else if(this->myIntrinsic == EXIT) //syscall
 	{
-		
+		out << '\n';
+		out << "\t\t\t\tmovq\t(%rax), %rdi\n"; // TODO
+		out << "\t\t\t\tmovq $60, %rax\n";
+		out << "\t\t\t\tsyscall\n";
 	}
 	// TODO(Implement me)
 }
@@ -175,7 +187,8 @@ void GetInQuad::codegenX64(std::ostream& out){
 }
 
 void SetOutQuad::codegenX64(std::ostream& out){
-	TODO(Implement me)
+	opd->genLoad(out, "%rax");
+	// TODO(Implement me)
 }
 
 void GetOutQuad::codegenX64(std::ostream& out){
@@ -183,7 +196,8 @@ void GetOutQuad::codegenX64(std::ostream& out){
 }
 
 void SymOpd::genLoad(std::ostream & out, std::string regStr){
-	TODO(Implement me)
+	out << "\t\t\t\tmovq\t" << this->getMemoryLoc() << ", " << regStr << '\n';
+	// TODO(Implement me)
 }
 
 void SymOpd::genStore(std::ostream& out, std::string regStr){
@@ -191,7 +205,11 @@ void SymOpd::genStore(std::ostream& out, std::string regStr){
 }
 
 void AuxOpd::genLoad(std::ostream & out, std::string regStr){
-	TODO(Implement me)
+	if(this->myLoc != "UNINIT")
+	{
+		out << "\t\t\t\tmovq\t$" << this->getMemoryLoc() << ", " << regStr << '\n';
+	}
+	// TODO(Implement me)
 }
 
 void AuxOpd::genStore(std::ostream& out, std::string regStr){
@@ -199,7 +217,8 @@ void AuxOpd::genStore(std::ostream& out, std::string regStr){
 }
 
 void LitOpd::genLoad(std::ostream & out, std::string regStr){
-	TODO(Implement me)
+	out << "\t\t\t\tmovq\t" << "$" << val << ", " << regStr << '\n';
+	// TODO(Implement me)
 }
 
 void LitOpd::genStore(std::ostream& out, std::string regStr){

@@ -1,9 +1,12 @@
 [BEGIN GLOBALS]
 a
+str_0 "hello world"
 [END GLOBALS]
 [BEGIN main LOCALS]
-a (local)
 [END main LOCALS]
 enter main
+OUTPUT str_0
+setout 1 12
+goto lbl_0
 lbl_0: EXIT
 
