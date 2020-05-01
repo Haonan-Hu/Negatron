@@ -1,5 +1,4 @@
 int a;
 int main(){
-  input a;
-  output a;
+  output 5 - 2;
 }

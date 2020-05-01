@@ -2,12 +2,12 @@
 #include "stdlib.h"
 
 void printInt(long int num){
-	fprintf(stdout, "%ld", num);
+	fprintf(stdout, "%ld\n", num);
 	fflush(stdout);
 }
 
 void printString(const char * str){
-	fprintf(stdout, "%s", str);
+	fprintf(stdout, "%s\n", str);
 	fflush(stdout);
 }
 

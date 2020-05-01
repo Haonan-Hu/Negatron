@@ -9,10 +9,11 @@ main:
 				pushq	%rbp
 				movq	%rsp, %rbp
 				addq	$16, %rbp
-				subq	$0, %rsp
-				callq getInt
-				movq	%rdx, gbl_a
-				movq	gbl_a, %rdx
+				subq	$8, %rsp
+				movq	$5, %rax
+				movq	$2, %rbx
+				subq %rbx, %rax
+				movq	$-24(%rbp), %rdi
 				callq printInt
 lbl_0: 
 				movq	%rax, %rdi
