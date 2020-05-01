@@ -1,6 +1,6 @@
 LEXER_TOOL := flex
 CXX ?= g++ # Set the C++ compiler to g++ iff it hasn't already been set
-CPP_SRCS := $(wildcard *.cpp) 
+CPP_SRCS := $(wildcard *.cpp)
 OBJ_SRCS := parser.o lexer.o $(CPP_SRCS:.cpp=.o)
 DEPS := $(OBJ_SRCS:.o=.d)
 FLAGS=-pedantic -Wall -Wextra -Wcast-align -Wcast-qual -Wctor-dtor-privacy -Wdisabled-optimization -Wformat=2 -Wuninitialized -Winit-self -Wmissing-declarations -Wmissing-include-dirs -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wsign-conversion -Wsign-promo -Wstrict-overflow=5 -Wundef -Werror -Wno-unused -Wno-unused-parameter
@@ -8,9 +8,10 @@ FLAGS=-pedantic -Wall -Wextra -Wcast-align -Wcast-qual -Wctor-dtor-privacy -Wdis
 
 .PHONY: all clean test cleantest
 
-all: negac stdnegatron.o
+all: clean negac stdnegatron.o test
 
 clean:
+	$(MAKE) -C p5_tests/ clean
 	rm -rf *.output *.o *.cc *.hh $(DEPS) negac parser.dot parser.png
 
 -include $(DEPS)
@@ -21,7 +22,7 @@ negac: $(OBJ_SRCS)
 stdnegatron.o: stdnegatron.c
 	gcc -o stdnegatron.o -c stdnegatron.c
 
-%.o: %.cpp 
+%.o: %.cpp
 	$(CXX) $(FLAGS) -g -std=c++14 -MMD -MP -c -o $@ $<
 
 parser.o: parser.cc

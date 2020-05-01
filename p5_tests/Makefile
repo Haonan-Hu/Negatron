@@ -6,8 +6,8 @@ TESTS := $(TESTFILES:.nega=.test)
 all: $(TESTS)
 
 %.test:
-	@rm -f $*.unparse $*.err $*.out $*.3ac
-	@touch $*.unparse $*.err $*.out $*.3ac
+	@rm -f $*.unparse $*.err $*.s $*.3ac
+	@touch $*.unparse $*.err $*.s $*.3ac
 	@echo "TEST $*"
 	@../negac $*.nega -o $*.s; \
 	PROG_EXIT_CODE=$$?;\
@@ -25,12 +25,5 @@ all: $(TESTS)
 	../stdnegatron.o \
 	/usr/lib/x86_64-linux-gnu/crtn.o \
 	-o $*.exe
-
-	# STDERR_DIFF_EXIT=$$?;\
-	# exit $$STDERR_DIFF_EXIT
-	#
-	# @../negac $*.nega -a $*.3ac 2> $*.3ac #run 3ac
-	# @../negac $*.nega -o $*.out 2> prog.s # run asm
-	# diff -B --ignore-all-space $*.out $*.out.expected
 clean:
-	rm -f *.err *.out *.o *.exe
+	rm -f *.err *.s *.o *.exe
