@@ -66,7 +66,6 @@ void Procedure::allocLocals(){
 	var = 0;
 	for(auto it : temps)
 	{
-		cout << "hit3\n";
 		var++;
 		size_t temp3 = 16 + locals.size() * 8 + var * 8;
 		it->setMemoryLoc('-' + to_string(temp3) + "(%rbp)");
@@ -124,6 +123,7 @@ void BinOpQuad::codegenX64(std::ostream& out){
 		src1->genLoad(out, "%rax");
 		src2->genLoad(out, "%rbx");
 		out << "\t\t\t\tsubq %rbx, %rax\n";
+		dst->genStore(out, "%rax");
 	}
 	// TODO(Implement me)
 }
@@ -227,18 +227,17 @@ void SymOpd::genStore(std::ostream& out, std::string regStr){
 void AuxOpd::genLoad(std::ostream & out, std::string regStr){
 	if(this->myLoc != "UNINIT")
 	{
-		cout << "hit1\n";
-		out << "\t\t\t\tmovq\t$" << this->getMemoryLoc() << ", " << regStr << '\n';
+		out << "\t\t\t\tmovq\t" << this->getMemoryLoc() << ", " << regStr << '\n';
 	}
 	// TODO(Implement me)
 }
 
 void AuxOpd::genStore(std::ostream& out, std::string regStr){
-	TODO(Implement me)
+	out << "\t\t\t\tmovq\t" << regStr << ", " << this->getMemoryLoc() << '\n';
+	// TODO(Implement me)
 }
 
 void LitOpd::genLoad(std::ostream & out, std::string regStr){
-	cout << "hit2\n";
 	out << "\t\t\t\tmovq\t" << "$" << val << ", " << regStr << '\n';
 	// TODO(Implement me)
 }
