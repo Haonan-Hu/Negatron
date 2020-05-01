@@ -10,8 +10,7 @@ FLAGS=-pedantic -Wall -Wextra -Wcast-align -Wcast-qual -Wctor-dtor-privacy -Wdis
 
 all: clean negac stdnegatron.o test
 
-clean:
-	$(MAKE) -C p5_tests/ clean
+clean: cleantest
 	rm -rf *.output *.o *.cc *.hh $(DEPS) negac parser.dot parser.png
 
 -include $(DEPS)
@@ -41,6 +40,6 @@ test: p5
 
 p5: all
 	$(MAKE) -C p5_tests/
-
+	
 cleantest:
 	$(MAKE) -C p5_tests/ clean

@@ -132,7 +132,7 @@ void LocQuad::codegenX64(std::ostream& out){
 }
 
 void JmpQuad::codegenX64(std::ostream& out){
-	out << "jmp " << tgt->toString() << "\n";
+	out << "\t\t\t\tjmp " << tgt->toString() << "\n";
 }
 
 void JmpIfQuad::codegenX64(std::ostream& out){
@@ -159,6 +159,8 @@ void IntrinsicQuad::codegenX64(std::ostream& out){
 	}
 	else if(this->myIntrinsic == INPUT)
 	{
+		out << "\t\t\t\tcallq getInt\n";
+		myArg->genStore(out, "%rax");
 	}
 	else if(this->myIntrinsic == EXIT) //syscall
 	{
@@ -208,7 +210,8 @@ void SymOpd::genLoad(std::ostream & out, std::string regStr){
 }
 
 void SymOpd::genStore(std::ostream& out, std::string regStr){
-	TODO(Implement me)
+	out << "\t\t\t\tmovq\t" << regStr << ", " << this->getMemoryLoc() << '\n';
+	// TODO(Implement me)
 }
 
 void AuxOpd::genLoad(std::ostream & out, std::string regStr){

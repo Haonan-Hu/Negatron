@@ -1,5 +1,5 @@
 int a;
 int main(){
-  output "hello world";
-  return 12;
+  input a;
+  output a;
 }

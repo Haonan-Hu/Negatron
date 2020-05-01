@@ -24,6 +24,7 @@ all: $(TESTS)
 	$*.o \
 	../stdnegatron.o \
 	/usr/lib/x86_64-linux-gnu/crtn.o \
-	-o $*.exe
+	-o $*.exe; \
+
 clean:
-	rm -f *.err *.s *.o *.exe
+	rm -f *.err *.o *.exe

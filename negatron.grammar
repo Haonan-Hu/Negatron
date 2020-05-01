@@ -1,0 +1,88 @@
+/**********************************************************************
+ Grammar for Negatron programs
+ **********************************************************************/
+program         ::= globals //DONE
+
+globals         ::= globals decl //DONE
+                | /* epsilon */
+
+decl            ::= varDecl SEMICOLON //Done
+                | structDecl SEMICOLON //DONE
+                | fnDecl //DONE
+
+varDecl         ::= type id //Done
+
+
+type            ::= INT maybeRef //Done
+                |   BOOL maybeRef //Done
+                |   VOID          //Done
+                |   STRUCT id maybeRef //Done
+
+maybeRef        ::= REF //Done
+                | /* epsilon */
+
+structDecl      ::= STRUCT id LCURLY structBody RCURLY //DONE
+
+structBody      ::= structBody varDecl SEMICOLON //DONE
+                |   varDecl SEMICOLON //DONE
+
+fnDecl          ::= type id formals fnBody //DONE
+
+formals         ::= LPAREN RPAREN //DONE
+                | LPAREN formalsList RPAREN //DONE
+
+formalsList     ::= formalDecl //DONE
+                | formalDecl COMMA formalsList //DONE
+
+formalDecl      ::= type id //DONE
+
+fnBody          ::= LCURLY stmtList RCURLY //DONE
+
+stmtList        ::= stmtList stmt //DONE
+                | /* epsilon */   //DONE
+
+stmt            ::= varDecl SEMICOLON //DONE
+                | assignExp SEMICOLON //DONE
+                | loc DASHDASH SEMICOLON  //DONE
+                | INPUT loc SEMICOLON //DONE
+                | OUTPUT exp SEMICOLON  //DONE
+                | IF LPAREN exp RPAREN LCURLY stmtList RCURLY //DONE
+                | IF LPAREN exp RPAREN LCURLY stmtList RCURLY ELSE LCURLY stmtList RCURLY //DONE
+                | WHILE LPAREN exp RPAREN LCURLY stmtList RCURLY  //DONE
+                | RETURN exp SEMICOLON  //DONE
+                | RETURN SEMICOLON  //DONE
+                | fncall SEMICOLON  //DONE
+
+assignExp       ::= loc ASSIGN exp  //DONE
+
+fncall          ::=  id LPAREN RPAREN   // fn call with no args //DONE
+                | id LPAREN actualsList RPAREN  // with args    //DONE
+
+exp             ::= assignExp //DONE
+                | exp DASH exp  //DONE
+                | exp STAR exp  //DONE
+                | exp SLASH exp //DONE
+                | exp AND exp //DONE
+                | exp OR exp  //DONE
+                | exp NOTEQUALS exp //DONE
+                | exp LESS exp  //DONE
+                | exp LESSEQ exp  //DONE
+                | NOT exp //DONE
+                | DASH term //DONE
+                | term  //DONE
+
+actualsList     ::= exp //DONE
+                | actualList COMMA exp  //DONE
+
+term            ::= loc //DONE
+                | INTLITERAL  //DONE
+                | STRLITERAL  //DONE
+                | FALSE       //DONE
+                | NULLREF     //DONE
+                | LPAREN exp RPAREN 
+                | fncall  //DONE
+
+loc             ::= id  //PROBABLY DONE
+                | loc DOT id  //PROBABLY DONE
+
+id              ::= ID  //DONE
