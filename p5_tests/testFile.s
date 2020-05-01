@@ -10,9 +10,10 @@ main:
 				movq	%rsp, %rbp
 				addq	$16, %rbp
 				subq	$8, %rsp
-				movq	$50, %rax
-				movq	$2, %rbx
-				subq %rbx, %rax
+				movq	$2, %rax
+				movq	$1, %rbx
+				cmpq %rbx, %rax
+				setle %al
 				movq	%rax, -24(%rbp)
 				movq	-24(%rbp), %rdi
 				callq printInt

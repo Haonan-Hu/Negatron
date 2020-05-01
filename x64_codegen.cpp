@@ -123,7 +123,59 @@ void BinOpQuad::codegenX64(std::ostream& out){
 		src1->genLoad(out, "%rax");
 		src2->genLoad(out, "%rbx");
 		out << "\t\t\t\tsubq %rbx, %rax\n";
-		dst->genStore(out, "%rax");
+		dst->genStore(out, "%rax"); //save %rax to tmp
+	}
+	else if(op == MULT)
+	{
+		src1->genLoad(out, "%rax");
+		src2->genLoad(out, "%rbx");
+		out << "\t\t\t\timulq %rbx\n";
+		dst->genStore(out, "%rax"); //save %rax to tmp
+	}
+	else if(op == DIV)
+	{
+		src1->genLoad(out, "%rax");
+		src2->genLoad(out, "%rbx");
+		out << "\t\t\t\tidivq %rbx\n";
+		dst->genStore(out, "%rax"); //save %rax to tmp
+	}
+	else if(op == OR)
+	{
+		src1->genLoad(out, "%rax");
+		src2->genLoad(out, "%rbx");
+		out << "\t\t\t\torq %rbx, %rax\n";
+		dst->genStore(out, "%rax"); //save %rax to tmp
+	}
+	else if(op == AND)
+	{
+		src1->genLoad(out, "%rax");
+		src2->genLoad(out, "%rbx");
+		out << "\t\t\t\tandq %rbx, %rax\n";
+		dst->genStore(out, "%rax"); //save %rax to tmp
+	}
+	else if(op == NEQ)
+	{
+		src1->genLoad(out, "%rax");
+		src2->genLoad(out, "%rbx");
+		out << "\t\t\t\tcmpq %rbx, %rax\n";
+		out << "\t\t\t\tsetne %al\n";
+		dst->genStore(out, "%rax"); //save %rax to tmp
+	}
+	else if(op == LT)
+	{
+		src1->genLoad(out, "%rax");
+		src2->genLoad(out, "%rbx");
+		out << "\t\t\t\tcmpq %rbx, %rax\n";
+		out << "\t\t\t\tsetl %al\n";
+		dst->genStore(out, "%rax"); //save %rax to tmp
+	}
+	else if(op == LTE)
+	{
+		src1->genLoad(out, "%rax");
+		src2->genLoad(out, "%rbx");
+		out << "\t\t\t\tcmpq %rbx, %rax\n";
+		out << "\t\t\t\tsetle %al\n";
+		dst->genStore(out, "%rax"); //save %rax to tmp
 	}
 	// TODO(Implement me)
 }

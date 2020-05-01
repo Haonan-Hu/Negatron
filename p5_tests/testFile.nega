@@ -1,4 +1,4 @@
 int a;
 int main(){
-  output 50 - 2;
+  output (2 <= 1);
 }
