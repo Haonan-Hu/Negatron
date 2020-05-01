@@ -17,7 +17,7 @@ void IRProgram::allocGlobals(){
 void IRProgram::datagenX64(std::ostream& out){
 	out << ".data\n";
 
-	out << ".globl\tfun_main\n";
+	out << ".globl\tmain\n";
 	allocGlobals();
 	for(auto it = globals.cbegin(); it != globals.cend(); ++it)
 	{
@@ -75,8 +75,15 @@ void Procedure::allocLocals(){
 void Procedure::toX64(std::ostream& out){
 	//Allocate all locals
 	allocLocals();
-
-	out << "fun_" << myName << ":" << "\n";
+	//if main, don't do this
+	if(!(myName == "main"))
+	{
+		out << "fun_" << myName << ":" << "\n";
+	}
+	else
+	{
+		out << myName << ":" << "\n";
+	}
 
 	//prologue
 	enter->codegenX64(out); // 1st
@@ -156,7 +163,7 @@ void IntrinsicQuad::codegenX64(std::ostream& out){
 	else if(this->myIntrinsic == EXIT) //syscall
 	{
 		out << '\n';
-		out << "\t\t\t\tmovq\t(%rax), %rdi\n"; // TODO
+		out << "\t\t\t\tmovq\t%rax, %rdi\n"; // TODO
 		out << "\t\t\t\tmovq $60, %rax\n";
 		out << "\t\t\t\tsyscall\n";
 	}

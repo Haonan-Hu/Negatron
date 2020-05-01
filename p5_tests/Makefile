@@ -9,18 +9,28 @@ all: $(TESTS)
 	@rm -f $*.unparse $*.err $*.out $*.3ac
 	@touch $*.unparse $*.err $*.out $*.3ac
 	@echo "TEST $*"
-	@../negac $*.nega -c 2> $*.err; \
+	@../negac $*.nega -o $*.s; \
 	PROG_EXIT_CODE=$$?;\
 	if [ $$PROG_EXIT_CODE != 0 ]; then \
 		echo "negac error:"; \
 		cat $*.err; \
 		exit 1; \
 	fi; \
-	STDERR_DIFF_EXIT=$$?;\
-	exit $$STDERR_DIFF_EXIT
+	as $*.s -o $*.o; \
+	ld -dynamic-linker /lib64/ld-linux-x86-64.so.2 \
+	/usr/lib/x86_64-linux-gnu/crt1.o \
+	/usr/lib/x86_64-linux-gnu/crti.o \
+	-lc \
+	$*.o \
+	../stdnegatron.o \
+	/usr/lib/x86_64-linux-gnu/crtn.o \
+	-o $*.exe
 
-	@../negac $*.nega -a $*.3ac 2> $*.3ac #run 3ac
-	@../negac $*.nega -o $*.out 2> prog.s # run asm
+	# STDERR_DIFF_EXIT=$$?;\
+	# exit $$STDERR_DIFF_EXIT
+	#
+	# @../negac $*.nega -a $*.3ac 2> $*.3ac #run 3ac
+	# @../negac $*.nega -o $*.out 2> prog.s # run asm
 	# diff -B --ignore-all-space $*.out $*.out.expected
 clean:
 	rm -f *.err *.out *.o *.exe
