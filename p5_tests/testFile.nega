@@ -1,7 +1,8 @@
 int a;
-int fn(int b){
-  output b - 99;
-}
 int main(){
-  fn(99 - 90);
+  if(1 < 2)
+  {
+    output "hit";
+  }
+  return 0;
 }

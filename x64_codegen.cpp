@@ -203,7 +203,7 @@ void AssignQuad::codegenX64(std::ostream& out){
 }
 
 void LocQuad::codegenX64(std::ostream& out){
-	TODO(Implement me)
+	// TODO(Implement me)
 }
 
 void JmpQuad::codegenX64(std::ostream& out){
@@ -211,7 +211,17 @@ void JmpQuad::codegenX64(std::ostream& out){
 }
 
 void JmpIfQuad::codegenX64(std::ostream& out){
-	TODO(Implement me)
+	cnd->genLoad(out, "%rax");
+	out << "\t\t\t\tcmpq $1, %rax\n";
+	if(invert)
+	{
+		out << "\t\t\t\tje " << tgt->toString() << '\n';
+	}
+	else
+	{
+		out << "\t\t\t\tjne " << tgt->toString() << '\n';
+	}
+	// TODO(Implement me)
 }
 
 void NopQuad::codegenX64(std::ostream& out){
@@ -223,6 +233,7 @@ void IntrinsicQuad::codegenX64(std::ostream& out){
 	{
 		if(myArg->getType() == ADDR)
 		{
+			cout << myArg->toString() << '\n';
 			myArg->genLoad(out, "%rdi");
 			out << "\t\t\t\tcallq printString\n";
 		}
@@ -297,7 +308,8 @@ void SetOutQuad::codegenX64(std::ostream& out){
 }
 
 void GetOutQuad::codegenX64(std::ostream& out){
-	TODO(Implement me)
+	opd->genStore(out, "%rax");
+	// TODO(Implement me)
 }
 
 void SymOpd::genLoad(std::ostream & out, std::string regStr){
@@ -313,7 +325,7 @@ void SymOpd::genStore(std::ostream& out, std::string regStr){
 void AuxOpd::genLoad(std::ostream & out, std::string regStr){
 	if(this->myLoc != "UNINIT")
 	{
-		out << "\t\t\t\tmovq\t" << this->getMemoryLoc() << ", " << regStr << '\n';
+		out << "\t\t\t\tmovq\t$" << this->getMemoryLoc() << ", " << regStr << '\n';
 	}
 	// TODO(Implement me)
 }
