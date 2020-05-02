@@ -7,7 +7,7 @@ void printInt(long int num){
 }
 
 void printString(const char * str){
-	fprintf(stdout, "%s\n", str);
+	fprintf(stdout, "%s", str);
 	fflush(stdout);
 }
 

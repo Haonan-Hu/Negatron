@@ -1,3 +1,51 @@
+int global;
+bool myBool;
+
+int fib(int n)
+{
+    if (n <= 1) {
+  return n;
+ }
+ return fib(n-1) - -fib(n-2);
+}
+
+int fn(int x, int y) {
+  global = x - -(y);
+        return x - y;
+}
+
+
+void recursive(int a, bool b, int c)
+{
+  while(b)
+  {
+    output a - -(c);
+    a--;
+    if(a <= 0)
+    {
+      b = false;
+    }
+    else
+    {
+      output fib(a);
+    }
+  }
+
+}
+
+bool b(int arg)
+{
+  if((arg / 2 * 4-2) < 10)
+  {
+    return !false;
+  }
+  else
+  {
+    return(!!!!false && (1<0));
+  }
+}
+
+
 int main()
 {
   int a;
@@ -8,4 +56,13 @@ int main()
     a--;
   }
   output "\n";
+  output fn(3, 7);
+
+  output "The 20th term of the series is: ";
+  output fib(20);
+  output "\n";
+  recursive(5,false || !false, 3*a-12);
+  output "\n";
+  output global;
+  myBool = b(8);
 }

@@ -233,7 +233,7 @@ void IntrinsicQuad::codegenX64(std::ostream& out){
 	{
 		if(myArg->getType() == ADDR)
 		{
-			cout << myArg->toString() << '\n';
+			// cout << myArg->toString() << '\n';
 			myArg->genLoad(out, "%rdi");
 			out << "\t\t\t\tcallq printString\n";
 		}
