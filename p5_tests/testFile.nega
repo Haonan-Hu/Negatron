@@ -1,8 +1,13 @@
-int a;
+int fib(int n)
+{
+    if (n <= 1) {
+  return n;
+ }
+ return fib(n-1) - -fib(n-2);
+}
 int main(){
-  if(1 < 2)
-  {
-    output "hit";
-  }
-  return 0;
+ output "The 20th term of the series is: ";
+ output fib(20);
+ output "\n";
+ return 0;
 }

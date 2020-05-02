@@ -325,8 +325,13 @@ void SymOpd::genStore(std::ostream& out, std::string regStr){
 void AuxOpd::genLoad(std::ostream & out, std::string regStr){
 	if(this->myLoc != "UNINIT")
 	{
-		out << "\t\t\t\tmovq\t$" << this->getMemoryLoc() << ", " << regStr << '\n';
-	}
+		out << "\t\t\t\tmovq\t";
+
+		if(this->getName().find("str_") != std::string::npos)
+		{
+			out << "$";
+		}
+		out << this->getMemoryLoc() << ", " << regStr << '\n';	}
 	// TODO(Implement me)
 }
 
