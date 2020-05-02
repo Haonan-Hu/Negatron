@@ -15,7 +15,54 @@ int fn(int x, int y) {
 }
 
 
-void recursive(int a, bool b, int c)
+void fizzbuzz()
+{
+  output "\n";
+  bool elseIf;
+  elseIf = !false;
+  int count_3;
+   count_3 = 0;
+   int count_5;
+   count_5 = 0;
+   int i;
+   i = 1;
+  while(i <= 100)
+  {
+    count_3 = count_3 - -(1);
+    count_5 = count_5 - -(1);
+    if(!(count_3 != 3) && !(count_5 != 5))
+    {
+      output "FizzBuzz";
+      count_3 = 0;
+      count_5 = 0;
+      elseIf = false;
+    }
+    if(!(count_3 != 3) && elseIf)
+    {
+      output "Fizz";
+      count_3 = 0;
+      elseIf = false;
+    }
+    if(!(count_5 != 5) && elseIf)
+    {
+      output "Buzz";
+      count_5 = 0;
+      elseIf = false;
+    }
+    if(elseIf)
+    {
+      output i;
+    }
+    elseIf = !false;
+    i = i - -(1);
+    output "\n";
+  }
+}
+
+
+
+
+void whileLoop(int a, bool b, int c)
 {
   while(b)
   {
@@ -45,6 +92,16 @@ bool b(int arg)
   }
 }
 
+int rec(int a)
+{
+  if(a < 0)
+  {
+    return a;
+  }
+  rec(a-1);
+
+}
+
 
 int main()
 {
@@ -61,8 +118,12 @@ int main()
   output "The 20th term of the series is: ";
   output fib(20);
   output "\n";
-  recursive(5,false || !false, 3*a-12);
+  whileLoop(5,false || !false, 3*a-12);
   output "\n";
   output global;
   myBool = b(8);
+  output myBool;
+  output !myBool;
+  output !b(12);
+  fizzbuzz();
 }
