@@ -2,7 +2,7 @@
 #include "stdlib.h"
 
 void printInt(long int num){
-	fprintf(stdout, "%ld\n", num);
+	fprintf(stdout, "%ld", num);
 	fflush(stdout);
 }
 

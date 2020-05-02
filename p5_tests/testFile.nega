@@ -1,13 +1,11 @@
-int fib(int n)
+int main()
 {
-    if (n <= 1) {
-  return n;
- }
- return fib(n-1) - -fib(n-2);
-}
-int main(){
- output "The 20th term of the series is: ";
- output fib(20);
- output "\n";
- return 0;
+  int a;
+  a = 6;
+  while(a!=0)
+  {
+    output a;
+    a--;
+  }
+  output "\n";
 }
