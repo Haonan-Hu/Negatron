@@ -9,6 +9,7 @@ all: $(TESTS)
 	@rm -f $*.unparse $*.err $*.s $*.3ac
 	@touch $*.unparse $*.err $*.s $*.3ac
 	@echo "TEST $*"
+	@../negac $*.nega -a $*.3ac 2> $*.3ac
 	@../negac $*.nega -o $*.s; \
 	PROG_EXIT_CODE=$$?;\
 	if [ $$PROG_EXIT_CODE != 0 ]; then \
@@ -27,4 +28,4 @@ all: $(TESTS)
 	-o $*.exe; \
 
 clean:
-	rm -f *.err *.o *.exe
+	rm -f *.err *.o *.exe *.3ac
